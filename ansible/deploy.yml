@@ -1,0 +1,30 @@
+- hosts: loadbalancer
+  gather_facts: no
+  tasks:
+    - name: Set active color
+      set_fact:
+        active_color: blue
+
+    - name: Set inactive color
+      set_fact:
+        inactive_color: green
+
+    - name: Save inactive color globally
+      add_host:
+        name: "dynamic_target"
+        groups: dynamic_group
+        target_color: "{{ inactive_color }}"
+
+- hosts: "{{ hostvars['loadbalancer']['inactive_color'] }}_nodes"
+  roles:
+    - app
+
+- hosts: "{{ hostvars['loadbalancer']['inactive_color'] }}_nodes"
+  roles:
+    - health_check
+
+- hosts: loadbalancer
+  vars:
+    active_color: "{{ hostvars['loadbalancer']['inactive_color'] }}"
+  roles:
+    - load_balancer

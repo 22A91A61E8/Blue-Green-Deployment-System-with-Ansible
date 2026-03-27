@@ -1,0 +1,3 @@
+- name: Rollback message
+  debug:
+    msg: "Rollback triggered"

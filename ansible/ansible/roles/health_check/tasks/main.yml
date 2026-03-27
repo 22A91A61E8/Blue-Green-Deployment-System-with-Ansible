@@ -1,0 +1,10 @@
+- name: Wait for app
+  wait_for:
+    port: 5000
+    delay: 5
+    timeout: 30
+
+- name: Check health
+  uri:
+    url: "http://{{ inventory_hostname }}:5000/health"
+    status_code: 200

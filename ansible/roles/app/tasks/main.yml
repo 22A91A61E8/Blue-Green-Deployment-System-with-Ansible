@@ -1,0 +1,35 @@
+- name: Install python
+  raw: apt update && apt install -y python3 python3-pip
+
+- name: Install Flask
+  pip:
+    name: flask
+
+- name: Create app directory
+  file:
+    path: /app
+    state: directory
+
+- name: Copy app files
+  copy:
+    src: "{{ playbook_dir }}/../app/"
+    dest: /app/
+
+- name: Verify app files
+  shell: ls -l /app
+  register: app_files
+
+- debug:
+    var: app_files.stdout
+
+- name: Kill old app (ignore errors)
+  shell: pkill -f app.py
+  ignore_errors: yes
+
+- name: Start Flask app
+  shell: |
+    cd /app
+    nohup python3 app.py > /app/output.log 2>&1 &
+  async: 1000
+  poll: 0
+

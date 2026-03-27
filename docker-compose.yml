@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  blue1:
+    image: ubuntu:20.04
+    container_name: blue1
+    command: sleep infinity
+
+  blue2:
+    image: ubuntu:20.04
+    container_name: blue2
+    command: sleep infinity
+
+  green1:
+    image: ubuntu:20.04
+    container_name: green1
+    command: sleep infinity
+
+  green2:
+    image: ubuntu:20.04
+    container_name: green2
+    command: sleep infinity
+
+  loadbalancer:
+    image: ubuntu:20.04
+    container_name: loadbalancer
+    command: sleep infinity
+    ports:
+      - "8080:80"

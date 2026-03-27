@@ -1,0 +1,20 @@
+- hosts: lb
+  gather_facts: no
+  tasks:
+    - set_fact:
+        active_color: blue
+        inactive_color: green
+
+- hosts: "{{ hostvars['loadbalancer']['inactive_color'] }}_nodes"
+  roles:
+    - app
+
+- hosts: "{{ hostvars['loadbalancer']['inactive_color'] }}_nodes"
+  roles:
+    - health_check
+
+- hosts: lb
+  vars:
+    active_color: "{{ hostvars['loadbalancer']['inactive_color'] }}"
+  roles:
+    - load_balancer
