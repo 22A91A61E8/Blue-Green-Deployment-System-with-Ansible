@@ -1,9 +1,0 @@
-{
-  "name": "submission",
-  "version": "1.0.0",
-  "type": "module",
-  "devDependencies": {
-    "@nomicfoundation/hardhat-toolbox": "^7.0.0",
-    "hardhat": "^2.22.0"
-  }
-}
